@@ -1,0 +1,9 @@
+configuration,batch_size,iterations,warmup_calls,best_ms,median_ms,p95_ms,mean_ms,samples_per_second,nnpa_execution_verified
+cpu_requested,1,100,10,0.566382,0.624266,0.9947142999999998,0.66908895,1494.5695934748287,requires diagnostic log review
+cpu_requested,32,100,10,1.025622,1.0667825,1.2616444499999997,1.10150004,29051.29263545011,requires diagnostic log review
+cpu_requested,128,100,10,2.371581,2.448588,2.73760275,2.49082724,51388.54993411747,requires diagnostic log review
+cpu_requested,256,100,10,4.884804,5.3344425,5.9910489,5.423889250000001,47198.603843173965,requires diagnostic log review
+plugin_default,1,100,10,1.346848,1.685428,2.11698215,1.67562936,596.7906888430267,requires diagnostic log review
+plugin_default,32,100,10,1.468077,1.6261575,2.0977914,1.67500887,19104.37644428713,requires diagnostic log review
+plugin_default,128,100,10,2.104277,2.417527,2.92276075,2.45539595,52130.08517017387,requires diagnostic log review
+plugin_default,256,100,10,2.701381,2.9697615,4.125285150000001,3.1557972900000006,81120.54624395724,requires diagnostic log review

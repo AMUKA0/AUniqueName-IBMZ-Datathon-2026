@@ -1,0 +1,42 @@
+llama_kv_cache: the V embeddings have different sizes across layers and FA is not enabled - padding V cache to 256
+Briefing 5 areas (3 need types) from lsoa_risk_replay_2022-12-09.csv
+No files in data/raw/policy -> using built-in fallback policy notes
+Loading Granite: granite-4.0-h-350m-base-be.f16.gguf (llama.cpp zDNN build, 3 threads)
+
+[ACT NOW] Bolton 004B (Bolton) - freeze chance 76%, vulnerability 87/100
+Why: many people aged 66+ living alone; high share of residents aged 75+. Need type: disability + poor health.
+Reach: ~817 households, ~189 older people living alone.
+Action (Granite): Prioritise visits to disabled and unwell residents, check care arrangements (including transport) so they can get help with appointments if needed. Check Pension Credit claims are paid.
+Sources: ColdWatch outreach checklist (team-written), Warm Home Discount 2026-27 (GOV.UK)
+  (generated in 11.19s, 35 tokens)
+
+[ACT NOW] Oldham 021D (Oldham) - freeze chance 76%, vulnerability 79/100
+Why: many people aged 66+ living alone; high share of residents aged 75+. Need type: affluent – very elderly + older people alone.
+Reach: ~782 households, ~173 older people living alone.
+Action (Granite): Make welfare calls to older people living alone, check the heating is on and food supplies are in place. Signpost local warm spaces.
+Sources: Cold Weather Payment (GOV.UK), ColdWatch outreach checklist (team-written)
+  (generated in 10.54s, 27 tokens)
+
+[ACT NOW] Tameside 006D (Tameside) - freeze chance 76%, vulnerability 72/100
+Why: poor housing condition / heating; many people aged 66+ living alone. Need type: younger – poor housing + no car.
+Reach: ~745 households, ~117 older people living alone.
+Action (Granite): Target homes with poor heating, give advice on running it affordably and signpost warm spaces.
+Sources: ColdWatch outreach checklist (team-written), Warm Home Discount 2026-27 (GOV.UK)
+  (generated in 9.63s, 19 tokens)
+
+[ACT NOW] Oldham 003D (Oldham) - freeze chance 76%, vulnerability 85/100
+Why: high share of residents aged 75+; poor housing condition / heating. Need type: disability + poor health.
+Reach: ~749 households, ~127 older people living alone.
+Action (Granite): Prioritise visits to disabled and unwell residents, check care arrangements (including transport) so they can get help with appointments if needed. Check Pension Credit claims are paid.
+Sources: ColdWatch outreach checklist (team-written), Warm Home Discount 2026-27 (GOV.UK)
+  (generated in 10.96s, 35 tokens)
+
+[ACT NOW] Bolton 005A (Bolton) - freeze chance 76%, vulnerability 85/100
+Why: many people aged 66+ living alone; high share of residents aged 75+. Need type: disability + poor health.
+Reach: ~841 households, ~194 older people living alone.
+Action (Granite): Prioritise visits to disabled and unwell residents, check care arrangements (including transport) so they can get help with appointments if needed. Check Pension Credit claims are paid.
+Sources: ColdWatch outreach checklist (team-written), Warm Home Discount 2026-27 (GOV.UK)
+  (generated in 11.3s, 35 tokens)
+
+Granite on IBM Z: 151 tokens in 53.6s (2.8 tokens/s)
+Saved /home/ibm-user/shared/zcold/data/processed/briefs_2022-12-09.csv

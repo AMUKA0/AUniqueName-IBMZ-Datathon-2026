@@ -1,0 +1,12 @@
+# data: download via README instructions, never commit
+data/
+*.xlsx
+*.ods
+*.zip
+*.gguf
+*.enc
+.zcold_key
+# caches
+__pycache__/
+.ipynb_checkpoints/
+*.pyc

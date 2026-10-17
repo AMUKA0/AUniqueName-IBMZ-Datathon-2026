@@ -1,0 +1,19 @@
+Configuration comparison, not automatically verified CPU-versus-NNPA speedup.
+CPU requested: NNPA_DEVICES=0. Plugin default: NNPA_DEVICES unset.
+Every configuration runs in a separate fresh Python/TensorFlow process.
+NNPA diagnostic: ZDNN_ENABLE_PRECHECK=true; TF_CPP_VMODULE=remapper=1.
+Timed runs disable prechecks and remapper logging; 2 intra/inter-op threads.
+Times include tf.function dispatch and output materialization (.numpy).
+Model loading, input preparation, tracing and warmup are excluded.
+Latency is per batch; throughput is samples per second across repeated calls.
+Same first held-out samples are reused; this is not end-to-end live-request timing.
+Prediction differences cover benchmark inputs only, not full-test accuracy.
+Precheck logs identify calls; inspect operation names, return status and fallback.
+Accelerating Dense/MatMul alone does not establish fused LSTM acceleration.
+Timings are an initial sequential comparison; host contention can affect them.
+Reference: https://github.com/IBM/ibmz-accelerated-for-tensorflow
+SHA256 best.keras: 5e66a33e2264ca44617f26ba8bab77cde3dd507c1acf26b2bb70e3a47a32e5d6
+SHA256 scaler.csv: efa189af0edd8f0ad8b398ca1c8b8e4b04ce5191a82da2f31f89324316d0b673
+SHA256 sample_manifest.csv: 8ed9f79de921bba9bbdadac75c58ec98564ffdab6a34f9772d55ab3c31fbb79d
+SHA256 station_daily_temp.csv: e7c97615a5a396b361c91ca98730e4c6c61dc97554cd1ed1147ae2601e3c096a
+SHA256 benchmark_zdnn.py: 879770f49f734e97ec137d280e8a484168b6b6fad8a92383c60bcc2c42c76e8c

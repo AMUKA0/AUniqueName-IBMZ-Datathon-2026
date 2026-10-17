@@ -1,0 +1,14 @@
+Requested configuration: cpu_requested
+NNPA_DEVICES: 0
+ZDNN_ENABLE_PRECHECK: false
+TensorFlow: 2.18.1
+ibm-zdnn-plugin: 2.3.0
+Plugin native libraries: ['/opt/venv/lib64/python3.12/site-packages/tensorflow/core/kernels/_z_ops.so']
+configuration  batch_size  iterations  warmup_calls  best_ms  median_ms   p95_ms  mean_ms  samples_per_second        nnpa_execution_verified
+cpu_requested           1         100            10 0.566382   0.624266 0.994714 0.669089         1494.569593 requires diagnostic log review
+configuration  batch_size  iterations  warmup_calls  best_ms  median_ms   p95_ms  mean_ms  samples_per_second        nnpa_execution_verified
+cpu_requested          32         100            10 1.025622   1.066782 1.261644   1.1015        29051.292635 requires diagnostic log review
+configuration  batch_size  iterations  warmup_calls  best_ms  median_ms   p95_ms  mean_ms  samples_per_second        nnpa_execution_verified
+cpu_requested         128         100            10 2.371581   2.448588 2.737603 2.490827        51388.549934 requires diagnostic log review
+configuration  batch_size  iterations  warmup_calls  best_ms  median_ms   p95_ms  mean_ms  samples_per_second        nnpa_execution_verified
+cpu_requested         256         100            10 4.884804   5.334442 5.991049 5.423889        47198.603843 requires diagnostic log review

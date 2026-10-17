@@ -1,0 +1,73 @@
+IBM Z accelerator: {
+  "nnpa_in_cpuinfo": true,
+  "ibm_zdnn_plugin": "2.3.0",
+  "zdnn_kernel_lib": "/opt/venv/lib/python3.12/site-packages/tensorflow/core/kernels/_z_ops.so",
+  "tensorflow": "2.18.1",
+  "tf_physical_devices": [
+    "CPU"
+  ]
+}
+Stations: ['Rochdale', 'Rostherne'] | rows 26,134 | 1991-01-01 .. 2026-10-10
+Sequences: train 20,806 | val 2,178 | test 3,050
+Epoch 1/20
+82/82 - 5s - 56ms/step - loss: 9.5313 - mae: 2.3850 - val_loss: 9.4284 - val_mae: 2.3603
+Epoch 2/20
+82/82 - 2s - 20ms/step - loss: 8.3503 - mae: 2.2426 - val_loss: 8.4833 - val_mae: 2.2411
+Epoch 3/20
+82/82 - 2s - 21ms/step - loss: 6.9254 - mae: 2.0605 - val_loss: 8.2471 - val_mae: 2.2074
+Epoch 4/20
+82/82 - 2s - 19ms/step - loss: 6.6688 - mae: 2.0239 - val_loss: 8.2965 - val_mae: 2.2145
+Epoch 5/20
+82/82 - 2s - 19ms/step - loss: 6.6217 - mae: 2.0185 - val_loss: 8.3763 - val_mae: 2.2246
+Epoch 6/20
+82/82 - 2s - 20ms/step - loss: 6.5607 - mae: 2.0110 - val_loss: 8.4565 - val_mae: 2.2373
+Epoch 7/20
+82/82 - 2s - 18ms/step - loss: 6.5343 - mae: 2.0055 - val_loss: 8.5015 - val_mae: 2.2437
+Training time: 14s
+
+Forecast error by horizon (winter test days):
+  horizon_day  MAE_lstm_C  MAE_persistence_C
+           1        1.65               1.74
+           2        2.18               2.45
+           3        2.39               2.76
+           4        2.44               2.93
+           5        2.48               3.14
+           6        2.54               3.23
+           7        2.59               3.29
+
+Trigger metrics (winters 2022-23 onwards): {
+  "winter_test_days": 1210,
+  "positive_days": 33,
+  "brier_lstm": 0.0173,
+  "brier_persistence": 0.0388,
+  "auc_lstm": 0.956,
+  "lstm_at_0.5": {
+    "precision": 0.607,
+    "recall": 0.515,
+    "TP": 17,
+    "FP": 11,
+    "FN": 16
+  },
+  "persistence": {
+    "precision": 0.383,
+    "recall": 0.697,
+    "TP": 23,
+    "FP": 37,
+    "FN": 10
+  }
+}
+
+Replay candidates (first day of each real cold event):
+ station_name       date  p_trigger  p_persistence  pred_tmean_7d  actual_tmean_7d
+    Rochdale 2022-12-09      0.762            1.0           0.61            -2.10
+    Rochdale 2025-01-09      0.612            1.0           0.76             2.94
+   Rostherne 2022-12-12      0.912            1.0           0.87             0.84
+
+NNPA inference benchmark:
+  batch  median_ms  sequences_per_s
+     1      74.46               13
+   100      75.66             1321
+  1000     109.94             9095
+ 10000     326.69            30609
+
+Saved models/lstm_tmean7.keras, models/lstm_meta.json, processed/hazard_test_predictions.csv

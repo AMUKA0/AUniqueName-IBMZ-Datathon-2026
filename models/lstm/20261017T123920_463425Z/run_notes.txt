@@ -1,0 +1,22 @@
+Task: forecast ERA5 daily mean temperature for t+1 through t+7.
+Input: t-29 through t, features in scaler.csv order.
+Season features: sin/cos(2*pi*dayofyear/365.25).
+Output: 7 normalized daily means. Celsius = output*scaler[tmean].std + mean.
+Baseline: repeat the last observed tmean for every future day.
+Proxy trigger: use predicted ERA5 tmean and six observed past days; full windows in Nov-Mar.
+No probability calibration, official DWP decision prediction or entitlement assessment.
+DWP diagnostics found ERA5 and station-observation disagreements; labels remain ERA5 proxies.
+Chronological splits; preprocessing fitted on training inputs only.
+Checkpoint/early stopping selected on winter validation MSE only; no test tuning.
+Test data have overlapping windows; samples are not independent events.
+NNPA presence/plugin installation are not proof that this model uses NNPA.
+Acceleration benchmarking and ONNX export have not been performed by this script.
+Seed: 42; batch size: 128; maximum epochs: 30
+Training seconds (not inference benchmark): 13.188
+Architecture: s390x; TensorFlow devices: [PhysicalDevice(name='/physical_device:CPU:0', device_type='CPU')]
+Package versions: {'tensorflow': '2.18.1', 'numpy': '2.0.2', 'pandas': '3.0.6', 'ibm-zdnn-plugin': '2.3.0', 'tf2onnx': '1.17.0'}
+Sources: https://keras.io/api/layers/recurrent_layers/lstm/
+https://keras.io/api/callbacks/early_stopping/
+SHA256 station_daily_temp.csv: e7c97615a5a396b361c91ca98730e4c6c61dc97554cd1ed1147ae2601e3c096a
+SHA256 forecast_samples.csv: ffc2c076b9e1b691df1ab0ce0d54c6b1495926c3b0c29e19668f3a30f922f667
+SHA256 train_lstm.py: db9be50f48e5295391ff16a95fe8d2510240f7c7b84a635c0cd80d150879ddd0

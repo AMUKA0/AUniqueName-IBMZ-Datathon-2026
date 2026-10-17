@@ -1,0 +1,26 @@
+Crypto backend: AES-256-GCM (pycryptodome)
+Synthetic register: 7,526 residents in 1613 LSOAs
+Encrypted with AES-256-GCM (pycryptodome) in 30 ms -> /home/ibm-user/shared/zcold/data/secure/register.enc (560 KB). No plaintext copy is written.
+Decrypted in memory only. 1,450 registered residents are in 'Act now' areas.
+Officer worklist (identifiable) -> /home/ibm-user/shared/zcold/data/secure/worklist_2022-12-09.enc [encrypted]
+
+WHAT THE MAINFRAME HOLDS (first 3, synthetic):
+           name        phone postcode  age  medical_equipment
+    Derek Lewis 07700 900569   BL67NH   86              False
+ Patricia Green 07700 900648   BL67JD   96              False
+Michael Roberts 07700 900974   BL67JJ   72              False
+
+WHAT GRANITE RECEIVES (pseudonymised):
+household_ref    lsoa21nm   age  medical_equipment  pension_credit
+HH-8c2d407ff2 Bolton 004B   80+              False           False
+HH-e450292cd0 Bolton 004B   80+              False            True
+HH-a583e3c7e5 Bolton 004B 66-79              False           False
+
+Aggregated per area for briefs:
+                registered_at_risk  aged_80plus  medical_equipment
+lsoa21nm                                                         
+Rochdale 018B                  15            9                  0
+Bolton 005A                    14           10                  1
+Oldham 020E                    14           10                  2
+Bolton 034C                    12            8                  0
+Bolton 006C                    11            6                  0
