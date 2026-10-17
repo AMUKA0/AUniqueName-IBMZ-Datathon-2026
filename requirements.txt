@@ -1,1 +1,5 @@
 folium
+odfpy
+openpyxl
+pycryptodome
+rank_bm25
