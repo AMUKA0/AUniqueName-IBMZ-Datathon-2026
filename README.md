@@ -196,4 +196,4 @@ Data files are not committed (size and licence terms); all sources are open and 
 
 ## Team
 - Hector Pearson: models, pipeline, map, notebook
-- Daniel *(surname)*: data engineering, weather stations, labels, policy integration
+- Daniel Mao: data engineering, weather stations, labels, policy integration
