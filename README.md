@@ -101,6 +101,7 @@ Screenshots: [`evidence/`](evidence/)
 - **Replay of the December 2022 cold spell:** the Rochdale station area moved to *Prepare* 5 days and *Act now* 3 days before the first freezing week completed. On 9 Dec 2022: **268 neighbourhoods on Act now, about 29,400 older people living alone**.
 - **Throughput:** up to about **30,000 LSTM forecasts per second** on IBM Z (batch 10,000).
 - **Index validation:** Spearman ρ = 0.32 against official fuel poverty, 0.33 against IMD and health deprivation.
+- **Scalability:** the full model pipeline scores all 33,755 English neighbourhoods in ~1.5 s on IBM Z (~22,600 per second).
 
 ---
 

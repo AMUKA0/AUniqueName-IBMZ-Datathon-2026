@@ -2,8 +2,6 @@
 
 python -m zcold.diagrams   -> images/architecture.png, images/decision_flow.png, images/lstm_model.png
 """
-import matplotlib
-matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.patches import FancyBboxPatch
 from .paths import ROOT
