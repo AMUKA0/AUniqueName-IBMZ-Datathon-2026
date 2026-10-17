@@ -41,7 +41,8 @@ CSS = """
 .cw-kpi{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:10px;padding:8px 10px}
 .cw-kpi b{display:block;font-size:20px;font-weight:800;line-height:1.1}
 .cw-kpi span{font-size:10.5px;color:var(--muted);line-height:1.25;display:block;margin-top:2px}
-.cw-legend{display:flex;gap:14px;margin-top:12px;font-size:11.5px;color:var(--muted)}
+.cw-legend{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:12px;font-size:11.5px;color:var(--muted)}
+.cw-legend span{white-space:nowrap}
 .cw-legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
 .cw-hint{margin-top:8px;font-size:11px;color:#64748b}
 #cw-bar{bottom:22px;left:50%;transform:translateX(-50%);padding:12px 16px;width:600px;max-width:calc(100vw - 32px)}
@@ -54,6 +55,11 @@ CSS = """
   box-shadow:0 0 0 4px rgba(244,63,94,.35);cursor:pointer}
 #cw-range::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#fff;border:0;cursor:pointer}
 #cw-stats{font-size:11.5px;color:var(--muted);margin-top:8px}
+#cw-plan{display:flex;align-items:center;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid rgba(148,163,184,.18);font-size:11.5px;color:var(--muted);flex-wrap:wrap}
+#cw-plan .cw-pl{color:var(--cyan);font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:10.5px}
+#cw-plan button{border:1px solid rgba(56,189,248,.35);background:transparent;color:#cbd5e1;border-radius:999px;padding:2px 9px;font:inherit;cursor:pointer}
+#cw-plan button.on{background:var(--cyan);color:#082f49;border-color:var(--cyan);font-weight:700}
+#cw-plan-s{flex-basis:100%;color:#e2e8f0}
 .leaflet-control-layers{background:var(--glass)!important;backdrop-filter:blur(10px);border:1px solid var(--line)!important;
   border-radius:12px!important;color:var(--ink);font:500 12px Inter,sans-serif;box-shadow:0 12px 32px rgba(0,0,0,.38)!important}
 .leaflet-control-layers-separator{border-top-color:var(--line)!important}
@@ -220,6 +226,7 @@ def build(date="2022-12-09", days_before=8, days_after=5, top_n=5, ignore_season
         days = daily_scores(focus - pd.Timedelta(days=days_before), focus + pd.Timedelta(days=days_after))
     df = days[focus].merge(cents, on="lsoa21cd", how="left")
     briefs, reg = _extras(date)
+    plan = None if live else _load_plan(days)
     when = f"Live forecast issued {focus:%d %b %Y}" if live else f"Replay snapshot for {focus:%d %b %Y}"
 
     m = folium.Map(location=[53.50, -2.30], zoom_start=10, tiles=None, control_scale=True,
@@ -304,6 +311,8 @@ def build(date="2022-12-09", days_before=8, days_after=5, top_n=5, ignore_season
            f"December 2022 cold spell &middot; model never saw this winter")
     hint = ("Live Open-Meteo data &rarr; LSTM on IBM Z &rarr; triage. Payments can only trigger Nov&ndash;Mar."
             if live else "Hover an area &middot; click a numbered pin for its Granite brief &middot; press &#9654; to replay")
+    plan_leg = ("<span><i style='background:transparent;border:2px solid var(--cyan)'></i>Planned visit</span>"
+                if plan else "")
     head = f"""
 <div id="cw-head" class="cw-panel">
   <div class="cw-brand">ColdWatch{pill}</div>
@@ -315,7 +324,7 @@ def build(date="2022-12-09", days_before=8, days_after=5, top_n=5, ignore_season
   </div>
   <div class="cw-legend"><span><i style="background:var(--red)"></i>Act now</span>
     <span><i style="background:var(--amber)"></i>Prepare</span><span><i style="background:var(--slate)"></i>Monitor</span>
-    <span><i style="background:#fff;border-radius:50%"></i>Granite brief</span></div>
+    <span><i style="background:#fff;border-radius:50%"></i>Granite brief</span>{plan_leg}</div>
   <div class="cw-hint">{hint}</div>
 </div>"""
     m.get_root().html.add_child(folium.Element(head))
@@ -324,11 +333,22 @@ def build(date="2022-12-09", days_before=8, days_after=5, top_n=5, ignore_season
     m.get_root().script.add_child(folium.Element(
         f'window.addEventListener("load", function() {{ L.control.zoom({{position: "bottomright"}}).addTo({m.get_name()}); }});'))
     if len(days) > 1:
-        _add_timeline(m, geo, days, focus)
+        _add_timeline(m, geo, days, focus, plan)
     return m
 
 
-def _add_timeline(m, geo, days, focus):
+def _load_plan(days):
+    """Planner output (python -m zcold.planner) restricted to the timeline's dates, or None."""
+    path = PROC / "planner_replay.json"
+    if not path.exists():
+        return None
+    p = json.load(open(path))
+    keys = {d.strftime("%Y-%m-%d") for d in days}
+    p["plans"] = {k: {d: v for d, v in days_.items() if d in keys} for k, days_ in p["plans"].items()}
+    return p if any(p["plans"].values()) else None
+
+
+def _add_timeline(m, geo, days, focus, plan=None):
     """Bottom timeline: play + slider; recolours the triage layer and updates the header KPIs."""
     dates = sorted(days)
     keys = [d.strftime("%Y-%m-%d") for d in dates]
@@ -342,6 +362,11 @@ def _add_timeline(m, geo, days, focus):
                     "people": int(dd.loc[act, "alone_66plus_hh"].sum()), "pmax": f"{dd.p_trigger_7d.max():.0%}",
                     "st": {s: f"{p:.0%}" for s, p in zip(st.station_name, st.p_trigger_7d)}}
     start = keys.index(focus.strftime("%Y-%m-%d")) if focus in dates else 0
+    ks = list(plan["plans"]) if plan else []
+    plan_html = ("" if not plan else
+                 "<div id='cw-plan'><span class='cw-pl'>Outreach plan</span><button data-k='0'>Off</button>" +
+                 "".join(f"<button data-k='{k}'>{k}</button>" for k in ks) +
+                 "<span>visits / day</span><span id='cw-plan-s'></span></div>")
     html = f"""
 <div id="cw-bar" class="cw-panel">
   <div class="cw-row1">
@@ -349,7 +374,7 @@ def _add_timeline(m, geo, days, focus):
     <input id="cw-range" type="range" min="0" max="{len(keys) - 1}" value="{start}">
     <div id="cw-date"></div>
   </div>
-  <div id="cw-stats"></div>
+  <div id="cw-stats"></div>{plan_html}
 </div>"""
     js = f"""
 window.addEventListener("load", function() {{
@@ -358,14 +383,38 @@ window.addEventListener("load", function() {{
   var EDGE = {{"1": "#fda4af", "2": "#fcd34d", "3": "#475569"}};
   var NAME = {{"1": "1 - Act now", "2": "2 - Prepare", "3": "3 - Monitor"}};
   var geo = {geo.get_name()}, cur = DATES[{start}];
+  var PLAN = {json.dumps(plan)}, K = PLAN ? ("40" in PLAN.plans ? "40" : Object.keys(PLAN.plans)[0]) : "0";
+  var today = {{}}, before = {{}};
+  function planSets() {{
+    today = {{}}; before = {{}};
+    if (!PLAN || K === "0") return;
+    DATES.forEach(function(d) {{
+      var dd = PLAN.plans[K][d]; if (!dd) return;
+      if (d === cur) dd.codes.forEach(function(c) {{ today[c] = 1; }});
+      else if (d < cur) dd.codes.forEach(function(c) {{ before[c] = 1; }});
+    }});
+  }}
+  function planStats() {{
+    var el = document.getElementById("cw-plan-s"); if (!el) return;
+    document.querySelectorAll("#cw-plan button").forEach(function(b) {{ b.classList.toggle("on", b.dataset.k === K); }});
+    if (K === "0") {{ el.innerHTML = "Plan hidden"; return; }}
+    var dd = PLAN.plans[K][cur] || {{visits: 0, people: 0, pct: 0}};
+    el.innerHTML = "Today: <b>" + dd.visits + "</b> visits &middot; <b>" + dd.people.toLocaleString() +
+      "</b> older people living alone &middot; <b style='color:#38bdf8'>" + dd.pct + "%</b> of priority residents reached so far";
+  }}
   function styleFor(f) {{
-    var x = DATA[cur][f.properties.LSOA21CD], p = x ? x[0] : "3";
-    return {{fillColor: COL[p], fillOpacity: FO[p], color: EDGE[p], weight: W[p], opacity: .7}};
+    var c = f.properties.LSOA21CD, x = DATA[cur][c], p = x ? x[0] : "3";
+    var st = {{fillColor: COL[p], fillOpacity: FO[p], color: EDGE[p], weight: W[p], opacity: .7}};
+    if (today[c]) {{ st.color = "#38bdf8"; st.weight = 2.6; st.opacity = 1; }}
+    else if (before[c]) {{ st.color = "#38bdf8"; st.weight = 1.1; st.opacity = .55; }}
+    return st;
   }}
   geo.options.style = styleFor;
   function show(i) {{
     cur = DATES[i];
+    planSets();
     geo.setStyle(styleFor);
+    planStats();
     geo.eachLayer(function(l) {{
       var x = DATA[cur][l.feature.properties.LSOA21CD];
       if (x) {{ l.feature.properties.priority = NAME[x[0]]; l.feature.properties.freeze = x[1]; }}
@@ -383,6 +432,9 @@ window.addEventListener("load", function() {{
   }}
   var r = document.getElementById("cw-range"), btn = document.getElementById("cw-play"), t = null;
   r.addEventListener("input", function() {{ show(+r.value); }});
+  document.querySelectorAll("#cw-plan button").forEach(function(b) {{
+    b.onclick = function() {{ K = b.dataset.k; show(+r.value); }};
+  }});
   btn.onclick = function() {{
     if (t) {{ clearInterval(t); t = null; btn.innerHTML = "&#9654;"; return; }}
     btn.innerHTML = "&#10074;&#10074;"; r.value = 0; show(0);

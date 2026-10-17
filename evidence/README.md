@@ -28,5 +28,8 @@
 | F4 | F4_map_brief_card.png | Map card with Granite brief | Demo / UX |
 | F5 | F5_map_14dec.png | Timeline replay, 14 Dec 2022 | Demo / UX |
 | F6 | F6_map_live.png | Live mode (current forecast) | Real-time |
+| G1 | G1_planner_backtest.png | Planner back-test: reached-in-time %, visits, false-alarm visits vs baselines | AI / decision support |
+| G2 | G2_planner_chart.png | Reach vs capacity: ColdWatch vs persistence vs forecast-free rota | AI / validation |
+| G3 | G3_map_outreach_plan.png | Day-by-day optimised plan on the map, adjustable capacity | Demo / UX |
 | — | zdnn_check.txt | Raw zDNN library check output | IBM Z hardware |
 | — | ColdWatch_Story_executed.html | Full executed notebook | Reproducibility |
