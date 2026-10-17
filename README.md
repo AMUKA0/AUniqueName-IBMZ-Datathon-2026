@@ -112,7 +112,8 @@ Screenshots and an index of what each proves: [`evidence/`](evidence/)
 | Metric | LSTM | Persistence baseline |
 |---|---|---|
 | Brier score (lower = better) | **0.018** | 0.039 |
-| Precision at P ≥ 0.5 | **57%** | 38% |
+| AUC | **0.973** | — |
+| Precision / recall at P ≥ 0.5 | **57% / 52%** | 38% / 70% |
 | False alarms at P ≥ 0.5 | **13** | 37 |
 | Forecast error, day 1 | **1.65 °C** | 1.74 °C |
 | Forecast error, day 7 | **2.57 °C** | 3.29 °C |

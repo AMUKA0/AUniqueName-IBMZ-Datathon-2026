@@ -12,7 +12,7 @@
 | B5 | B5_lstm_training.png | LSTM training run (seed 42) | AI model |
 | B6 | B6_lstm_metrics.png | Test winters: MAE, Brier, false alarms vs persistence | AI model / validation |
 | B7 | B7_granite_generation.png | Granite briefs + number guardrail | Generative AI |
-| C1 | C1_throughput_benchmark.png | Batch inference up to ~30,000 sequences/s | Performance |
+| C1 | C1_throughput_benchmark.png | Batch inference up to 33,363 forecasts/s | Performance |
 | C2 | C2_national_scale.png | All 33,755 English LSOAs scored in 1.5 s | Scalability |
 | C3 | C3_resources.png | CPU / memory footprint | Performance |
 | D0 | D0_environment.png | LinuxONE environment overview | Deployment |
@@ -22,7 +22,7 @@
 | E1 | E1_privacy_split.png | Mainframe holds identities; Granite receives pseudonyms only | Privacy (Theme 2) |
 | E2 | E2_encrypted_at_rest.png | Worklist encrypted at rest (AES-256-GCM) | Privacy / security |
 | E3 | E3_crypto_backend.png | Crypto backend in use | Privacy / security |
-| F1 | F1_dec2022_warning_ramp.png | Dec 2022 replay: Prepare 5 days, Act 3 days before freeze | Impact / validation |
+| F1 | F1_dec2022_warning_ramp.png | Dec 2022 replay: Rochdale Prepare 5 days / Act 3 days early; Rostherne 4 / 1 | Impact / validation |
 | F2 | F2_triage_summary.png | 268 Act now / 411 Prepare / 1,023 Monitor (9 Dec 2022) | Impact |
 | F3 | F3_map_triage.png | Interactive triage map | Demo / UX |
 | F4 | F4_map_brief_card.png | Map card with Granite brief | Demo / UX |
