@@ -1,0 +1,7 @@
+{
+  "load data (I/O)": 6.114,
+  "vulnerability index (33,755 areas)": 0.04,
+  "KMeans archetypes (k=3)": 0.163,
+  "LSTM 7-day forecast, every neighbourhood (Telum AI accelerator)": 1.289,
+  "neighbourhoods": 33755
+}

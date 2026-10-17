@@ -1,0 +1,32 @@
+/home/ibm-user/shared/zcold/zcold/scale.py:55: Pandas4Warning: Starting with pandas version 4.0 all arguments of sum will be keyword-only.
+  out["pct_75plus"] = age[cols(age, "75 to") + cols(age, "80 to") + cols(age, "85 years and over")].sum(1) / age[cols(age, "total")[0]] * 100
+/home/ibm-user/shared/zcold/zcold/scale.py:56: Pandas4Warning: Starting with pandas version 4.0 all arguments of sum will be keyword-only.
+  out["pct_alone_66plus"] = hh[cols(hh, "one person household", "66")].sum(1) / hh[cols(hh, "total")[0]] * 100
+/home/ibm-user/shared/zcold/zcold/scale.py:58: Pandas4Warning: Starting with pandas version 4.0 all arguments of sum will be keyword-only.
+  out["pct_disabled"] = dis[d].sum(1) / dis[cols(dis, "total")[0]] * 100
+/home/ibm-user/shared/zcold/zcold/scale.py:59: Pandas4Warning: Starting with pandas version 4.0 all arguments of sum will be keyword-only.
+  out["pct_no_car"] = car[cols(car, "no cars")].sum(1) / car[cols(car, "total")[0]] * 100
+Loading national IoD 2025 + Census 2021 (I/O, not part of the model timing)...
+  33,755 English neighbourhoods in 296 local authorities
+
+Timing on IBM LinuxONE:
+                                                          stage  seconds
+                                                load data (I/O)     6.11
+                             vulnerability index (33,755 areas)     0.04
+                                        KMeans archetypes (k=3)     0.16
+LSTM 7-day forecast, every neighbourhood (Telum AI accelerator)     1.29
+
+Model pipeline for all of England: 1.5 s (22,626 neighbourhoods per second)
+
+Local authorities with the highest mean cold-weather vulnerability:
+ lad_name
+Blackpool          70.2
+North Norfolk      69.4
+Isles of Scilly    68.2
+East Lindsey       67.8
+Torbay             66.7
+Isle of Wight      66.5
+Tendring           66.3
+Torridge           65.1
+Wyre               64.5
+Cornwall           64.3
